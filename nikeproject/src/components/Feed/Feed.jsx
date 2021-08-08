@@ -1,32 +1,30 @@
-import React from 'react';
+import React , {useState , useEffect , useContext} from 'react';
+import axios from 'axios';
 import './Feed.scss';
 import ReelStory from './ReelStory/ReelStory';
 import MessageSender from './MessageSender/MessageSender';
 import Post from './Post/Post';
+import { DataContext } from '../../API/context';
 
 export default function Feed(){
+
+    const {posts}  = useContext(DataContext);
+
+
     return (
         <div className = "feed">
             <ReelStory />
             <MessageSender />
-            <Post 
-                profilePic = 'https://picsum.photos/202'
-                message = 'Wow this work'
-                username = 'Ossama'
-                image = 'https://picsum.photos/200'
-            />
-            <Post 
-            profilePic = 'https://picsum.photos/201'
-            message = 'Wow this work'
-            username = 'Mohamed'
-            image = 'https://picsum.photos/205'
-            />
-            <Post 
-            profilePic = 'https://picsum.photos/203'
-            message = 'Wow this work'
-            username = 'Amine'
-            image = 'https://picsum.photos/209'
-            />
+            {posts.map((post => {
+                return(
+                <Post 
+                    profilePic = 'https://picsum.photos/202'
+                    message = {post.message}
+                    username = {post.user__fullname}
+                    image = {post.image}
+                />
+                )
+            }))} 
         </div>
     );
 }
